@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
-from .models import Utilisateur
+from .models import Utilisateur, consulte, recherche, Note, Favoris
 from .serializer import UtilisateurSerializer, LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
@@ -34,5 +34,5 @@ class UtilisateurViewSet(viewsets.ModelViewSet):
             })
         return Response({'detail': 'Identifiants invalides.'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        
+
         

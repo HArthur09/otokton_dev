@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Utilisateur
+from .models import Utilisateur, consulte, recherche, Note, Favoris
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 # Serializer pour l'utilisateur
@@ -30,3 +30,33 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+    
+    
+class ConsulteSerializer(serializers.HyperlinkedModelSerializer):
+    utilisateur = serializers.HyperlinkedRelatedField(
+        view_name='utilisateur-detail',
+        read_only=True
+    )
+    lieu = serializers.HyperlinkedRelatedField(
+        view_name='lieu-detail',
+        read_only=True
+    )
+    evenement = serializers.HyperlinkedRelatedField(
+        view_name='evenement-detail',
+        read_only=True
+    )
+    
+    class Meta: 
+        model = consulte
+        fields = ['id', 'utilisateur', 'lieu', 'evenement', 'date_consultation']
+        
+class RechercheSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = recherche
+        fields = ['id', 'utilisateur', 'mot_cle', 'date_creation']
+        
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['id', 'utilisateur', 'lieu', 'evenement', 'note', 'commentaire', 'date_creation', 'date_modification']
+    
