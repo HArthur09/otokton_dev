@@ -19,8 +19,7 @@ class Lieu(models.Model):
     
 class Evenement(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    titre = models.ForeignKey(Lieu, on_delete=models.CASCADE, related_name='evenements')
-    description_lieu = models.TextField()
+    titre = models.CharField(max_length=255)
     latitude = models.FloatField()
     longtitude = models.FloatField()
     heure = models.TimeField(null=True, blank=True)
@@ -32,7 +31,7 @@ class Evenement(models.Model):
     en_cours = models.BooleanField(default=True)
     
     def __str__(self):
-        return self.titre.nom if self.titre else "Événement sans titre"
+        return self.titre if self.titre else "Événement sans titre"
     
 class imageLieu(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
